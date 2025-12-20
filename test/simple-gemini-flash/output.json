@@ -1,0 +1,28 @@
+{
+  "invoice_number": "US-001",
+  "date": "11/02/2019",
+  "customer": "John Smith",
+  "items": [
+    {
+      "name": "Front and rear brake cables",
+      "quantity": 1,
+      "unit_price": 100,
+      "total": 100
+    },
+    {
+      "name": "New set of pedal arms",
+      "quantity": 2,
+      "unit_price": 15,
+      "total": 30
+    },
+    {
+      "name": "Labor 3hrs",
+      "quantity": 3,
+      "unit_price": 5,
+      "total": 15
+    }
+  ],
+  "subtotal": 145,
+  "tax": 9.06,
+  "total": 154.06
+}

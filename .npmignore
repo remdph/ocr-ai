@@ -1,0 +1,27 @@
+# Source
+src/
+
+# Tests
+test/
+
+# Config
+tsconfig.json
+tsup.config.ts
+.eslintrc*
+.prettierrc*
+
+# Dev files
+CLAUDE.md
+.gitignore
+.github/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

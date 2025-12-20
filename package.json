@@ -1,0 +1,68 @@
+{
+  "name": "ocr-ai",
+  "version": "1.0.1",
+  "description": "Multi-provider AI document extraction library - Extract text or structured JSON from documents using Gemini, OpenAI, Grok, or Claude",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:gemini": "npx tsx test/simple-gemini-flash/index.ts",
+    "test:gemini:url": "npx tsx test/simple-gemini-url/index.ts",
+    "test:openai": "npx tsx test/simple-openai/index.ts",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "extraction",
+    "document",
+    "pdf",
+    "ocr",
+    "gemini",
+    "openai",
+    "claude",
+    "grok",
+    "text-extraction",
+    "json-extraction"
+  ],
+  "author": "remdph",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remdph/ocr-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/remdph/ocr-ai/issues"
+  },
+  "homepage": "https://github.com/remdph/ocr-ai#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@google/genai": "^1.34.0",
+    "@google/generative-ai": "^0.21.0",
+    "openai": "^4.73.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

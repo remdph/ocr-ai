@@ -1,0 +1,38 @@
+{
+  "invoice_number": null,
+  "date": null,
+  "due_date": null,
+  "company": {
+    "name": "Your Company Name",
+    "address": "123 Street Address, City, State, Zip/Post Code",
+    "phone": "Phone Number",
+    "email": "Email"
+  },
+  "bill_to": {
+    "name": "Contact Name",
+    "address": null
+  },
+  "items": [
+    {
+      "description": "Widget 1",
+      "quantity": 1,
+      "unit_price": 5,
+      "total": 5
+    },
+    {
+      "description": "Gadget 2",
+      "quantity": 1,
+      "unit_price": 7,
+      "total": 7
+    },
+    {
+      "description": "Item 3",
+      "quantity": 2,
+      "unit_price": 6,
+      "total": 12
+    }
+  ],
+  "subtotal": 24,
+  "tax": 1.92,
+  "total": 28.92
+}
