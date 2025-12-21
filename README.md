@@ -13,14 +13,14 @@ npm install ocr-ai
 ### Using Gemini
 
 ```typescript
-import { ExtractaAI } from 'ocr-ai';
+import { OcrAI } from 'ocr-ai';
 
-const extracta = new ExtractaAI({
+const ocr = new OcrAI({
   provider: 'gemini',
   apiKey: 'YOUR_GEMINI_API_KEY',
 });
 
-const result = await extracta.extract('./invoice.png');
+const result = await ocr.extract('./invoice.png');
 
 if (result.success) {
   const text = result.content;
@@ -31,14 +31,14 @@ if (result.success) {
 ### Using OpenAI
 
 ```typescript
-import { ExtractaAI } from 'ocr-ai';
+import { OcrAI } from 'ocr-ai';
 
-const extracta = new ExtractaAI({
+const ocr = new OcrAI({
   provider: 'openai',
   apiKey: 'YOUR_OPENAI_API_KEY',
 });
 
-const result = await extracta.extract('./document.pdf');
+const result = await ocr.extract('./document.pdf');
 
 if (result.success) {
   const text = result.content;
@@ -46,12 +46,31 @@ if (result.success) {
 }
 ```
 
+### Custom Model
+
+You can specify a custom model for any provider:
+
+```typescript
+const ocr = new OcrAI({
+  provider: 'gemini',
+  apiKey: 'YOUR_GEMINI_API_KEY',
+  model: 'gemini-2.0-flash', // Use a specific model
+});
+
+// Or with OpenAI
+const ocrOpenAI = new OcrAI({
+  provider: 'openai',
+  apiKey: 'YOUR_OPENAI_API_KEY',
+  model: 'gpt-4o-mini', // Use a different model
+});
+```
+
 ### From URL
 
 Extract directly from a URL:
 
 ```typescript
-const result = await extracta.extract('https://example.com/invoice.png');
+const result = await ocr.extract('https://example.com/invoice.png');
 
 if (result.success) {
   console.log(result.content);
@@ -63,7 +82,7 @@ if (result.success) {
 You can provide custom instructions to guide the extraction:
 
 ```typescript
-const result = await extracta.extract('./receipt.png', {
+const result = await ocr.extract('./receipt.png', {
   prompt: 'Extract only the total amount and date from this receipt',
 });
 
@@ -79,7 +98,7 @@ By default, extraction returns text. You can also extract structured JSON:
 
 ```typescript
 // Text output (default)
-const textResult = await extracta.extract('./invoice.png', {
+const textResult = await ocr.extract('./invoice.png', {
   format: 'text',
 });
 
@@ -88,7 +107,7 @@ if (textResult.success) {
 }
 
 // JSON output with schema
-const jsonResult = await extracta.extract('./invoice.png', {
+const jsonResult = await ocr.extract('./invoice.png', {
   format: 'json',
   schema: {
     invoice_number: 'string',
@@ -173,7 +192,7 @@ const invoiceSchema = {
   total: 'number',
 };
 
-const result = await extracta.extract('./invoice.png', {
+const result = await ocr.extract('./invoice.png', {
   format: 'json',
   schema: invoiceSchema,
   prompt: 'Extract all invoice data from this document.',
@@ -186,7 +205,7 @@ You can pass model-specific parameters like temperature, max tokens, and more:
 
 ```typescript
 // Gemini with model config
-const result = await extracta.extract('./invoice.png', {
+const result = await ocr.extract('./invoice.png', {
   modelConfig: {
     temperature: 0.2,
     maxTokens: 4096,
@@ -196,7 +215,7 @@ const result = await extracta.extract('./invoice.png', {
 });
 
 // OpenAI with model config
-const result = await extracta.extract('./invoice.png', {
+const result = await ocr.extract('./invoice.png', {
   modelConfig: {
     temperature: 0,
     maxTokens: 2048,
@@ -220,7 +239,7 @@ Available options:
 Access token usage information from the metadata:
 
 ```typescript
-const result = await extracta.extract('./invoice.png');
+const result = await ocr.extract('./invoice.png');
 
 if (result.success) {
   console.log(result.content);
@@ -269,9 +288,9 @@ The `vertex` provider enables access to Google Cloud's AI infrastructure, which 
 Vertex AI uses Google Cloud authentication instead of API keys:
 
 ```typescript
-import { ExtractaAI } from 'ocr-ai';
+import { OcrAI } from 'ocr-ai';
 
-const extracta = new ExtractaAI({
+const ocr = new OcrAI({
   provider: 'vertex',
   vertexConfig: {
     project: 'your-gcp-project-id',
@@ -279,7 +298,7 @@ const extracta = new ExtractaAI({
   },
 });
 
-const result = await extracta.extract('./invoice.png');
+const result = await ocr.extract('./invoice.png');
 ```
 
 **Requirements:**
@@ -313,7 +332,7 @@ For specialized document processing beyond what Gemini models offer, Google Clou
 - Handwriting detection
 - Simple integration, ~98% accuracy on clean documents
 
-These services are separate from extracta-ai but can complement it for enterprise document pipelines.
+These services are separate from ocr-ai but can complement it for enterprise document pipelines.
 
 ## License
 

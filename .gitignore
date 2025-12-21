@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+package-lock.json
 
 # Build output
 dist/
@@ -23,3 +24,5 @@ npm-debug.log*
 # Test artifacts
 coverage/
 *.tmp
+
+CLAUDE.md

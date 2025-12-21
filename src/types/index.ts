@@ -30,11 +30,19 @@ export interface VertexConfig {
 }
 
 /**
- * Main configuration for ExtractaAI
+ * Main configuration for OcrAI
  */
-export interface ExtractaConfig {
+export interface OcrConfig {
   provider: AIProvider;
   apiKey?: string;
+  /**
+   * Model to use for extraction. If not specified, uses provider defaults:
+   * - gemini: 'gemini-1.5-flash'
+   * - openai: 'gpt-4o'
+   * - claude: 'claude-sonnet-4-20250514'
+   * - grok: 'grok-2-vision-1212'
+   * - vertex: 'gemini-2.0-flash'
+   */
   model?: string;
   /**
    * Vertex AI configuration (required when provider is 'vertex')

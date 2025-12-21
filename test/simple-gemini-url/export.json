@@ -10,7 +10,7 @@
   },
   "bill_to": {
     "name": "Contact Name",
-    "address": null
+    "address": "Address"
   },
   "items": [
     {

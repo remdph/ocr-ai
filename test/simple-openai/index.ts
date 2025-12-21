@@ -1,19 +1,19 @@
-import { ExtractaAI } from '../../src';
+import { OcrAI } from '../../src';
 import * as path from 'path';
 
 const API_KEY = 'YOUR_OPENAI_API_KEY';
 
 async function main() {
-  console.log('ExtractaAI - Simple OpenAI Test\n');
+  console.log('OcrAI - Simple OpenAI Test\n');
 
-  const extracta = new ExtractaAI({
+  const ocr = new OcrAI({
     provider: 'openai',
     apiKey: API_KEY,
     model: 'gpt-4o',
   });
 
-  console.log(`Provider: ${extracta.getProvider()}`);
-  console.log(`Model: ${extracta.getModel()}\n`);
+  console.log(`Provider: ${ocr.getProvider()}`);
+  console.log(`Model: ${ocr.getModel()}\n`);
 
   const invoicePath = path.join(__dirname, '..', 'simple-gemini-flash', 'invoice1.png');
 
@@ -22,7 +22,7 @@ async function main() {
   console.log('Test 1: Text extraction from invoice image');
   console.log('-'.repeat(50));
 
-  const textResult = await extracta.extract(invoicePath, {
+  const textResult = await ocr.extract(invoicePath, {
     format: 'text',
     prompt: 'Extract all the text from this invoice image.',
   });
@@ -63,7 +63,7 @@ async function main() {
     total: 'number',
   };
 
-  const jsonResult = await extracta.extract(invoicePath, {
+  const jsonResult = await ocr.extract(invoicePath, {
     format: 'json',
     schema: invoiceSchema,
     prompt: 'Extract the invoice data from this image.',
@@ -90,7 +90,7 @@ async function main() {
 
   const outputPath = path.join(__dirname, 'output.json');
 
-  const saveResult = await extracta.extract(invoicePath, {
+  const saveResult = await ocr.extract(invoicePath, {
     format: 'json',
     schema: invoiceSchema,
     outputPath,

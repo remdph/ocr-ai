@@ -1,6 +1,6 @@
 import type {
   AIProvider,
-  ExtractaConfig,
+  OcrConfig,
   ExtractionOptions,
   ExtractionResult,
   FileInfo,
@@ -27,11 +27,11 @@ import {
 /**
  * Main class for document extraction using AI
  */
-export class ExtractaAI {
+export class OcrAI {
   private provider: IAIProvider;
-  private config: ExtractaConfig;
+  private config: OcrConfig;
 
-  constructor(config: ExtractaConfig) {
+  constructor(config: OcrConfig) {
     this.config = config;
     this.provider = this.createProvider(config);
   }
@@ -39,7 +39,7 @@ export class ExtractaAI {
   /**
    * Create a provider instance based on configuration
    */
-  private createProvider(config: ExtractaConfig): IAIProvider {
+  private createProvider(config: OcrConfig): IAIProvider {
     switch (config.provider) {
       case 'gemini':
         if (!config.apiKey) throw new Error('API key is required for Gemini provider');
@@ -230,8 +230,8 @@ export class ExtractaAI {
 }
 
 /**
- * Factory function to create ExtractaAI instance
+ * Factory function to create OcrAI instance
  */
-export function createExtractaAI(config: ExtractaConfig): ExtractaAI {
-  return new ExtractaAI(config);
+export function createOcrAI(config: OcrConfig): OcrAI {
+  return new OcrAI(config);
 }

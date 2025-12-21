@@ -1,5 +1,5 @@
 // Main exports
-export { ExtractaAI, createExtractaAI } from './extracta';
+export { OcrAI, createOcrAI } from './ocr';
 
 // Type exports
 export type {
@@ -7,7 +7,7 @@ export type {
   OutputFormat,
   SupportedFileType,
   ProviderConfig,
-  ExtractaConfig,
+  OcrConfig,
   ExtractionOptions,
   ExtractionResult,
   TextExtractionResult,

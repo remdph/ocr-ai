@@ -1,19 +1,19 @@
-import { ExtractaAI } from '../../src';
+import { OcrAI } from '../../src';
 import * as path from 'path';
 
 const API_KEY = 'YOUR_GEMINI_API_KEY';
 
 async function main() {
-  console.log('ExtractaAI - Gemini URL Test\n');
+  console.log('OcrAI - Gemini URL Test\n');
 
-  const extracta = new ExtractaAI({
+  const ocr = new OcrAI({
     provider: 'gemini',
     apiKey: API_KEY,
     model: 'gemini-2.0-flash',
   });
 
-  console.log(`Provider: ${extracta.getProvider()}`);
-  console.log(`Model: ${extracta.getModel()}\n`);
+  console.log(`Provider: ${ocr.getProvider()}`);
+  console.log(`Model: ${ocr.getModel()}\n`);
 
   const invoiceUrl = 'https://www.invoicesimple.com/wp-content/uploads/2024/08/navy-invoice-template-centered-en.jpg';
 
@@ -53,7 +53,7 @@ async function main() {
 
   const outputPath = path.join(__dirname, 'export.json');
 
-  const result = await extracta.extract(invoiceUrl, {
+  const result = await ocr.extract(invoiceUrl, {
     format: 'json',
     schema: invoiceSchema,
     prompt: 'Extract all invoice data from this image.',
