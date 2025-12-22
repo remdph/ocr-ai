@@ -1,7 +1,8 @@
 import { OcrAI } from '../../src';
 import * as path from 'path';
 
-const API_KEY = 'YOUR_GEMINI_API_KEY';
+const API_KEY = process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY';
+const MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 
 async function main() {
   console.log('OcrAI - Simple Gemini Flash Test\n');
@@ -9,7 +10,7 @@ async function main() {
   const ocr = new OcrAI({
     provider: 'gemini',
     apiKey: API_KEY,
-    model: 'gemini-2.0-flash',
+    model: MODEL,
   });
 
   console.log(`Provider: ${ocr.getProvider()}`);

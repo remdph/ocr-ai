@@ -26,3 +26,5 @@ coverage/
 *.tmp
 
 CLAUDE.md
+
+.claude/

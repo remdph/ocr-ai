@@ -334,6 +334,125 @@ For specialized document processing beyond what Gemini models offer, Google Clou
 
 These services are separate from ocr-ai but can complement it for enterprise document pipelines.
 
+## Gemini Model Benchmarks
+
+Performance benchmarks for Gemini models extracting data from an invoice image:
+
+| Model | Text Extraction | JSON Extraction | Best For |
+|-------|-----------------|-----------------|----------|
+| `gemini-2.0-flash-lite` | 2.8s | 2.1s | High-volume processing, cost optimization |
+| `gemini-2.5-flash-lite` | 2.2s | 1.9s | Fastest option, simple documents |
+| `gemini-2.0-flash` | 3.9s | 2.9s | General purpose, good balance |
+| `gemini-2.5-flash` | 5.0s | 5.0s | Standard documents, reliable |
+| `gemini-3-flash-preview` | 12.3s | 10.6s | Complex layouts, newer capabilities |
+| `gemini-3-pro-image-preview` | 8.0s | 11.9s | Image-heavy documents |
+| `gemini-2.5-pro` | 12.6s | 5.5s | High accuracy, complex documents |
+| `gemini-3-pro-preview` | 24.8s | 13.1s | Maximum accuracy, handwritten text |
+
+### Model Recommendations
+
+**For digital documents (invoices, receipts, forms):**
+```typescript
+// Fast and cost-effective
+const ocr = new OcrAI({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+  model: 'gemini-2.5-flash-lite', // ~2s response time
+});
+```
+
+**For complex documents or when accuracy is critical:**
+```typescript
+// Higher accuracy, slower processing
+const ocr = new OcrAI({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+  model: 'gemini-2.5-pro', // Best accuracy/speed ratio
+});
+```
+
+**For handwritten documents or poor quality scans:**
+```typescript
+// Maximum accuracy for difficult documents
+const ocr = new OcrAI({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+  model: 'gemini-3-pro-preview', // Best for handwriting
+});
+```
+
+### Quick Reference
+
+| Use Case | Recommended Model |
+|----------|-------------------|
+| High-volume batch processing | `gemini-2.5-flash-lite` |
+| Standard invoices/receipts | `gemini-2.0-flash` |
+| Complex tables and layouts | `gemini-2.5-pro` |
+| Handwritten documents | `gemini-3-pro-preview` |
+| Poor quality scans | `gemini-3-pro-preview` |
+| Real-time applications | `gemini-2.5-flash-lite` |
+
+## OpenAI Model Benchmarks
+
+Performance benchmarks for OpenAI models extracting data from an invoice image:
+
+| Model | Text Extraction | JSON Extraction | Best For |
+|-------|-----------------|-----------------|----------|
+| `gpt-4.1-nano` | 4.4s | 2.4s | Fastest, cost-effective |
+| `gpt-4.1-mini` | 4.8s | 3.2s | Good balance speed/accuracy |
+| `gpt-4.1` | 8.2s | 5.4s | High accuracy, reliable |
+| `gpt-4o-mini` | 7.2s | 5.7s | Budget-friendly |
+| `gpt-4o` | 12.3s | 10.7s | Standard high accuracy |
+| `gpt-5.2` | 6.4s | 5.0s | Latest generation |
+| `gpt-5-mini` | 12.2s | 7.9s | GPT-5 balanced option |
+| `gpt-5-nano` | 19.9s | 16.1s | GPT-5 economy tier |
+
+> **Note:** `gpt-5.2-pro` and `gpt-image-1` use different API endpoints and are not currently supported.
+
+### Model Recommendations
+
+**For digital documents (invoices, receipts, forms):**
+```typescript
+// Fast and cost-effective
+const ocr = new OcrAI({
+  provider: 'openai',
+  apiKey: 'YOUR_API_KEY',
+  model: 'gpt-4.1-nano', // ~2-4s response time
+});
+```
+
+**For complex documents or when accuracy is critical:**
+```typescript
+// Higher accuracy, reliable extraction
+const ocr = new OcrAI({
+  provider: 'openai',
+  apiKey: 'YOUR_API_KEY',
+  model: 'gpt-4.1', // Best accuracy/speed ratio
+});
+```
+
+**For handwritten documents or poor quality scans:**
+```typescript
+// Maximum accuracy for difficult documents
+const ocr = new OcrAI({
+  provider: 'openai',
+  apiKey: 'YOUR_API_KEY',
+  model: 'gpt-5.2', // Latest generation, best accuracy
+});
+```
+
+### Quick Reference
+
+| Use Case | Recommended Model |
+|----------|-------------------|
+| High-volume batch processing | `gpt-4.1-nano` |
+| Standard invoices/receipts | `gpt-4.1-mini` |
+| Complex tables and layouts | `gpt-4.1` |
+| Handwritten documents | `gpt-5.2` |
+| Poor quality scans | `gpt-5.2` |
+| Real-time applications | `gpt-4.1-nano` |
+| Budget-conscious projects | `gpt-4o-mini` |
+
 ## License
 
 MIT

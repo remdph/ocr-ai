@@ -1,7 +1,8 @@
 import { OcrAI } from '../../src';
 import * as path from 'path';
 
-const API_KEY = 'YOUR_OPENAI_API_KEY';
+const API_KEY = process.env.OPENAI_API_KEY || 'YOUR_OPENAI_API_KEY';
+const MODEL = process.env.OPENAI_MODEL || 'gpt-4o';
 
 async function main() {
   console.log('OcrAI - Simple OpenAI Test\n');
@@ -9,7 +10,7 @@ async function main() {
   const ocr = new OcrAI({
     provider: 'openai',
     apiKey: API_KEY,
-    model: 'gpt-4o',
+    model: MODEL,
   });
 
   console.log(`Provider: ${ocr.getProvider()}`);

@@ -61,15 +61,18 @@ export class OpenAIProvider extends BaseProvider {
   }
 
   private buildCompletionOptions(modelConfig?: ModelConfig): Record<string, unknown> {
-    const options: Record<string, unknown> = {
-      max_tokens: 16384,
-    };
+    const options: Record<string, unknown> = {};
+
+    // GPT-5 and o1/o3 models use max_completion_tokens instead of max_tokens
+    const useMaxCompletionTokens = this.model.startsWith('gpt-5') ||
+                                    this.model.startsWith('o1') ||
+                                    this.model.startsWith('o3');
+
+    const tokenParam = useMaxCompletionTokens ? 'max_completion_tokens' : 'max_tokens';
+    options[tokenParam] = modelConfig?.maxTokens ?? 16384;
 
     if (modelConfig?.temperature !== undefined) {
       options.temperature = modelConfig.temperature;
-    }
-    if (modelConfig?.maxTokens !== undefined) {
-      options.max_tokens = modelConfig.maxTokens;
     }
     if (modelConfig?.topP !== undefined) {
       options.top_p = modelConfig.topP;

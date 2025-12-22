@@ -1,7 +1,7 @@
 {
   "invoice_number": "US-001",
   "date": "11/02/2019",
-  "customer": "John Smith",
+  "customer": "John Smith, 2 Court Square, New York, NY 12210",
   "items": [
     {
       "name": "Front and rear brake cables",

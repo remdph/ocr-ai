@@ -1,6 +1,6 @@
 {
   "name": "ocr-ai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Multi-provider AI document extraction library - Extract text or structured JSON from documents using Gemini, OpenAI, Grok, or Claude",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
