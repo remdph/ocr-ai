@@ -235,3 +235,197 @@ export class OcrAI {
 export function createOcrAI(config: OcrConfig): OcrAI {
   return new OcrAI(config);
 }
+
+/**
+ * Callback types for Promise-based API
+ */
+export type ExtractionCallback<T = ExtractionResult> = (error: Error | null, result?: T) => void;
+
+/**
+ * Promise-based wrapper for OcrAI with callback support
+ * Provides an alternative async API for users who prefer callbacks or need more control over promise handling
+ */
+export class OcrAIPromise {
+  private ocr: OcrAI;
+
+  constructor(config: OcrConfig) {
+    this.ocr = new OcrAI(config);
+  }
+
+  /**
+   * Extract content from a file path or URL with callback support
+   * @param source - File path or URL
+   * @param options - Extraction options
+   * @param callback - Optional callback (error, result)
+   * @returns Promise if no callback provided
+   */
+  extract(
+    source: string,
+    options?: ExtractionOptions,
+    callback?: ExtractionCallback
+  ): Promise<ExtractionResult> | void {
+    const promise = this.ocr.extract(source, options);
+
+    if (callback) {
+      promise
+        .then((result) => {
+          if (result.success) {
+            callback(null, result);
+          } else {
+            callback(new Error(result.error), result);
+          }
+        })
+        .catch((error) => callback(error instanceof Error ? error : new Error(String(error))));
+      return;
+    }
+
+    return promise;
+  }
+
+  /**
+   * Extract content from a Buffer with callback support
+   */
+  extractFromBuffer(
+    buffer: Buffer,
+    fileName: string,
+    options?: ExtractionOptions,
+    callback?: ExtractionCallback
+  ): Promise<ExtractionResult> | void {
+    const promise = this.ocr.extractFromBuffer(buffer, fileName, options);
+
+    if (callback) {
+      promise
+        .then((result) => {
+          if (result.success) {
+            callback(null, result);
+          } else {
+            callback(new Error(result.error), result);
+          }
+        })
+        .catch((error) => callback(error instanceof Error ? error : new Error(String(error))));
+      return;
+    }
+
+    return promise;
+  }
+
+  /**
+   * Extract content from a base64 string with callback support
+   */
+  extractFromBase64(
+    base64: string,
+    fileName: string,
+    options?: ExtractionOptions,
+    callback?: ExtractionCallback
+  ): Promise<ExtractionResult> | void {
+    const promise = this.ocr.extractFromBase64(base64, fileName, options);
+
+    if (callback) {
+      promise
+        .then((result) => {
+          if (result.success) {
+            callback(null, result);
+          } else {
+            callback(new Error(result.error), result);
+          }
+        })
+        .catch((error) => callback(error instanceof Error ? error : new Error(String(error))));
+      return;
+    }
+
+    return promise;
+  }
+
+  /**
+   * Extract multiple files in parallel
+   * @param sources - Array of file paths or URLs
+   * @param options - Extraction options (applied to all)
+   * @returns Promise resolving to array of results
+   */
+  extractMany(
+    sources: string[],
+    options?: ExtractionOptions
+  ): Promise<ExtractionResult[]> {
+    return Promise.all(sources.map((source) => this.ocr.extract(source, options)));
+  }
+
+  /**
+   * Extract multiple files with individual options
+   * @param items - Array of { source, options } objects
+   * @returns Promise resolving to array of results
+   */
+  extractBatch(
+    items: Array<{ source: string; options?: ExtractionOptions }>
+  ): Promise<ExtractionResult[]> {
+    return Promise.all(items.map((item) => this.ocr.extract(item.source, item.options)));
+  }
+
+  /**
+   * Extract with automatic retry on failure
+   * @param source - File path or URL
+   * @param options - Extraction options
+   * @param retries - Number of retries (default: 3)
+   * @param delayMs - Delay between retries in ms (default: 1000)
+   * @returns Promise resolving to extraction result
+   */
+  async extractWithRetry(
+    source: string,
+    options?: ExtractionOptions,
+    retries: number = 3,
+    delayMs: number = 1000
+  ): Promise<ExtractionResult> {
+    let lastResult: ExtractionResult | undefined;
+
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      const result = await this.ocr.extract(source, options);
+
+      if (result.success) {
+        return result;
+      }
+
+      lastResult = result;
+
+      // Don't delay after the last attempt
+      if (attempt < retries) {
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+    }
+
+    return lastResult!;
+  }
+
+  /**
+   * Get the underlying OcrAI instance
+   */
+  getOcrAI(): OcrAI {
+    return this.ocr;
+  }
+
+  /**
+   * Get current provider name
+   */
+  getProvider(): AIProvider {
+    return this.ocr.getProvider();
+  }
+
+  /**
+   * Get current model
+   */
+  getModel(): string {
+    return this.ocr.getModel();
+  }
+
+  /**
+   * Change the AI provider
+   */
+  setProvider(provider: AIProvider, apiKey: string, model?: string): void {
+    this.ocr.setProvider(provider, apiKey, model);
+  }
+}
+
+/**
+ * Factory function to create OcrAIPromise instance
+ */
+export function createOcrAIPromise(config: OcrConfig): OcrAIPromise {
+  return new OcrAIPromise(config);
+}

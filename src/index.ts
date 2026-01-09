@@ -1,5 +1,6 @@
 // Main exports
-export { OcrAI, createOcrAI } from './ocr';
+export { OcrAI, createOcrAI, OcrAIPromise, createOcrAIPromise } from './ocr';
+export type { ExtractionCallback } from './ocr';
 
 // Type exports
 export type {

@@ -453,6 +453,126 @@ const ocr = new OcrAI({
 | Real-time applications | `gpt-4.1-nano` |
 | Budget-conscious projects | `gpt-4o-mini` |
 
+## Promise API
+
+For users who prefer callbacks or need more control over async operations, `ocr-ai` provides an alternative `OcrAIPromise` class with additional features.
+
+### Basic Usage with Callbacks
+
+```typescript
+import { OcrAIPromise } from 'ocr-ai';
+
+const ocr = new OcrAIPromise({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+});
+
+// Using callback style
+ocr.extract('./invoice.png', {}, (error, result) => {
+  if (error) {
+    console.error('Extraction failed:', error.message);
+    return;
+  }
+  console.log('Extracted:', result.content);
+});
+```
+
+### Using .then()/.catch()
+
+```typescript
+import { OcrAIPromise } from 'ocr-ai';
+
+const ocr = new OcrAIPromise({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+});
+
+// Promise chain style
+ocr.extract('./invoice.png')
+  .then((result) => {
+    if (result.success) {
+      console.log('Content:', result.content);
+    }
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+```
+
+### Extract Multiple Files in Parallel
+
+```typescript
+const ocr = new OcrAIPromise({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+});
+
+// Extract many files at once
+const results = await ocr.extractMany([
+  './invoice1.png',
+  './invoice2.png',
+  './invoice3.png',
+]);
+
+results.forEach((result, index) => {
+  if (result.success) {
+    console.log(`File ${index + 1}:`, result.content);
+  }
+});
+```
+
+### Batch Extraction with Individual Options
+
+```typescript
+const ocr = new OcrAIPromise({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+});
+
+// Each file with its own options
+const results = await ocr.extractBatch([
+  { source: './invoice.png', options: { format: 'json', schema: invoiceSchema } },
+  { source: './receipt.png', options: { format: 'text' } },
+  { source: './contract.pdf', options: { prompt: 'Extract key dates and amounts' } },
+]);
+```
+
+### Automatic Retry on Failure
+
+```typescript
+const ocr = new OcrAIPromise({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+});
+
+// Retry up to 3 times with 1 second delay between attempts
+const result = await ocr.extractWithRetry(
+  './invoice.png',
+  { format: 'json', schema: invoiceSchema },
+  3,    // retries
+  1000  // delay in ms
+);
+
+if (result.success) {
+  console.log('Extracted after retries:', result.data);
+}
+```
+
+### Access Underlying OcrAI Instance
+
+```typescript
+const ocrPromise = new OcrAIPromise({
+  provider: 'gemini',
+  apiKey: 'YOUR_API_KEY',
+});
+
+// Get the underlying OcrAI instance for direct access
+const ocr = ocrPromise.getOcrAI();
+
+// Use standard async/await if needed
+const result = await ocr.extract('./invoice.png');
+```
+
 ## License
 
 MIT

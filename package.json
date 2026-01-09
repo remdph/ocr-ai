@@ -1,6 +1,6 @@
 {
   "name": "ocr-ai",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Multi-provider AI document extraction library - Extract text or structured JSON from documents using Gemini, OpenAI, Grok, or Claude",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -22,6 +22,7 @@
     "test:run": "vitest run",
     "test:gemini": "npx tsx test/simple-gemini-flash/index.ts",
     "test:gemini:url": "npx tsx test/simple-gemini-url/index.ts",
+    "test:gemini:promise": "npx tsx test/simple-gemini-promise/index.ts",
     "test:openai": "npx tsx test/simple-openai/index.ts",
     "lint": "eslint src --ext .ts",
     "prepublishOnly": "npm run build"

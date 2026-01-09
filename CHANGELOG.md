@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2025-12-22
+
+### Added
+
+- **Promise API:** New `OcrAIPromise` class with alternative async patterns:
+  - Callback-style API: `ocr.extract(source, options, callback)`
+  - Promise chain support: `.then()/.catch()`
+  - `extractMany()`: Extract multiple files in parallel
+  - `extractBatch()`: Extract multiple files with individual options per file
+  - `extractWithRetry()`: Automatic retry on failure with configurable retries and delay
+  - `getOcrAI()`: Access underlying OcrAI instance
+- Factory function `createOcrAIPromise()` for creating OcrAIPromise instances
+- New test suite for Promise API (`test:gemini:promise`)
+
+### Exports
+
+New exports added:
+- `OcrAIPromise` class
+- `createOcrAIPromise` factory function
+- `ExtractionCallback` type
+
 ## [1.0.3] - 2024-12-22
 
 ### Added
